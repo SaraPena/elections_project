@@ -1,17 +1,21 @@
-import pandas as pd
+# Source Urls - https://www.bexar.org/DocumentCenter/View/28547/Election-by-Precinct-Text-File-Layout
+# Source Urls - https://www.bexar.org/DocumentCenter/View/28546/November-3-2020-General-Election-by-Precinct-Text-File
+# Source Urls - https://www.bexar.org/2186/Historical-Election-Results
 
+# use pandas to set up a dataframe
+import pandas as pd 
+
+
+# read text file in the folder bexar_election_results.txt
+# 'data' is an arbitrary variable name
+# create a list of strings that contain each line of the data with .readlines()
+# each line in the data contains one race result per precinct
 with open('bexar_election_results.txt', 'r') as data:
     lines = data.readlines()
 
-type(lines[0])
 
-len(lines)
-
-a=[0,1,2,3]
-
-for n in a:
-    print(a[0:4])
-
+# From precinct layout text file I was able to find the structure of data for each line - https://www.bexar.org/DocumentCenter/View/28547/Election-by-Precinct-Text-File-Layout
+# create an empty list for each field/variable label
 
 racecode=[]
 candidatecode=[]
@@ -26,9 +30,7 @@ district_code=[]
 race_name=[]
 candidate_name=[]
 precinct=[]
-filler=[]
 district=[]
-Filler2=[]
 
 
 for line in lines:
@@ -39,16 +41,34 @@ for line in lines:
     election_day.append(line[17:23])
     absentee.append(line[23:29])
     early_voting.append(line[29:35])
-    filler.append(line[35:101])
     candidate_party.append(line[101:104])
     district_code.append(line[104:111])
     race_name.append(line[111:167])
     candidate_name.append(line[167:205])
     precinct.append(line[205:209])
-    filler.append(line[209:235])
     district.append(line[235:260])
 
-race_name=pd.Series(race_name)
-race_name.value_counts()
-precincts=pd.Series(precincts)
-precincts.nunique()
+
+# Running through lists to explore data
+# race_name=pd.Series(race_name)
+# race_name.value_counts()
+# precincts=pd.Series(precincts)
+# precincts.nunique()
+
+
+# Create the dataframe by combining each list
+df=pd.DataFrame({'racecode':racecode,\
+    'candidatecode':candidatecode, \
+    'precincts':precincts,\
+    'totals':totals,\
+    'election_day':election_day,\
+    'absentee':absentee,\
+    'early_voting':early_voting,\
+    'candidate_party':candidate_party,\
+    'district_code':district_code,\
+    'race_name':race_name,\
+    'candidate_name':candidate_name, \
+    'precinct':precinct,\
+    'district':district})
+
+df.head()
