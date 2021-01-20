@@ -1,2 +1,2 @@
 # elections_project
-analysis of bexar count elections
+analysis of bexar county elections
